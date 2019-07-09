@@ -1,0 +1,12 @@
+{
+  "name": "game-pilot-prototype",
+  "version": "0.0.1",
+  "description": "Just a pilot prototype for game engine.",
+  "scripts": {
+	  "start": "./node_modules/.bin/http-server -p 8000"
+  },
+  "dependencies": {
+    "http-server": "^0.11.1",
+    "pixi.js": "^5.0.4"
+  }
+}

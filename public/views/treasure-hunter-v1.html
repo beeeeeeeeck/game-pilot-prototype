@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Hello World</title>
+</head>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.0.4/pixi.min.js"></script> -->
+<script src="https://underscorejs.org/underscore-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.5.5/pixi.min.js"></script>
+
+<body>
+    <script type="text/javascript">
+        //Create a Pixi Application
+        let app = new PIXI.Application({
+            width: 512, // default: 800
+            height: 512, // default: 600
+            antialias: true, // default: false
+            transparent: false, // default: false
+            resolution: 1 // default: 1
+        });
+
+        //Add the canvas that Pixi automatically created for you to the HTML document
+        document.body.appendChild(app.view);
+
+        //Load an image and run the `setup` function when it's done
+        PIXI.loader
+            .add("treasureHunterImages", "../images/treasure-hunter.json")
+            .on("progress", (loader, resource) => {
+                console.log("loading: " + resource.url);
+                console.log("progress: " + loader.progress + "%");
+            })
+            .load(afterLoad);
+
+        //This `setup` function will run when the image has loaded
+        const drawView = function() {
+            //There are 3 ways to make sprites from textures atlas frames
+
+            //1. Access the `TextureCache` directly
+            let dungeonTexture = PIXI.TextureCache["dungeon.png"];
+            let dungeon = new PIXI.Sprite(dungeonTexture);
+            app.stage.addChild(dungeon);
+
+            //2. Access the texture using throuhg the loader's `resources`:
+            let explorer = new PIXI.Sprite(
+                PIXI.loader.resources.treasureHunterImages.textures["explorer.png"]
+            );
+            explorer.x = 68;
+
+            //Center the explorer vertically
+            explorer.y = app.stage.height / 2 - explorer.height / 2;
+            app.stage.addChild(explorer);
+
+            //3. Create an optional alias called `id` for all the texture atlas
+            //frame id textures.
+            let images = PIXI.loader.resources.treasureHunterImages.textures;
+
+            //Make the treasure box using the alias
+            let treasure = new PIXI.Sprite(images["treasure.png"]);
+            app.stage.addChild(treasure);
+
+            //Position the treasure next to the right edge of the canvas
+            treasure.x = app.stage.width - treasure.width - 48;
+            treasure.y = app.stage.height / 2 - treasure.height / 2;
+            app.stage.addChild(treasure);
+
+            //Make the door
+            let door = new PIXI.Sprite(images["door.png"]);
+            door.position.set(32, 0);
+            app.stage.addChild(door);
+
+            //Make the blobs
+            let numberOfBlobs = 6,
+                spacing = 48,
+                xOffset = 150;
+
+            //Make as many blobs as there are `numberOfBlobs`
+            for (let i = 0; i < numberOfBlobs; i++) {
+                //Make a blob
+                let blob = new PIXI.Sprite(images["blob.png"]);
+
+                //Space each blob horizontally according to the `spacing` value.
+                //`xOffset` determines the point from the left of the screen
+                //at which the first blob should be added.
+                let x = spacing * i + xOffset;
+
+                //Give the blob a random y position
+                //(`randomInt` is a custom function - see below)
+                let y = _.random(0, app.stage.height - blob.height);
+
+                //Set the blob's position
+                blob.x = x;
+                blob.y = y;
+
+                //Add the blob sprite to the stage
+                app.stage.addChild(blob);
+            }
+        }
+
+        function afterLoad() {
+            setInterval(drawView, 1000 / 30);
+        }
+    </script>
+</body>
+
+</html>
