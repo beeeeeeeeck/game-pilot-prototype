@@ -10,7 +10,10 @@ npm-debug.log
 
 # Code editor-specific excludes
 *.sublime-*
+
+src/webpackStats.json
 lib/
+public/js/*
 
 # ide
 .idea

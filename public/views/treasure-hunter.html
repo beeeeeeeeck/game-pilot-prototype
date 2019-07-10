@@ -80,7 +80,7 @@
             let numberOfBlobs = 6,
                 spacing = 48,
                 xOffset = 150,
-                speed = 2,
+                speed = 5,
                 direction = 1;
 
             //An array to store all the blob monsters
@@ -283,8 +283,8 @@
                 //Make the explorer semi-transparent
                 explorer.alpha = 0.5;
 
-                //Reduce the width of the health bar's inner rectangle by 1 pixel
-                healthBar.outer.width -= 1;
+                //Reduce the width of the health bar's inner rectangle by 20 pixel
+                healthBar.outer.width -= 10;
 
             } else {
 
