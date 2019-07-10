@@ -13,7 +13,8 @@ const GAME_DEV = {
 	mode: 'development',
 	devtool: 'inline-source-map',
 	entry: {
-		"test": './src/test.js'
+		"test": './src/test.js',
+		"treasureHunter": './src/treasureHunter.js'
 	},
 	// resolve: {
 	// 	extensions: [".js"]
