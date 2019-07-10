@@ -6,6 +6,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 // const TerserPlugin = require('terser-webpack-plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const StatsPlugin = require('stats-webpack-plugin');
+const EsmWebpackPlugin = require("@purtuga/esm-webpack-plugin");
 
 const GAME_DEV = {
 	name: 'game-dev',
@@ -21,6 +22,7 @@ const GAME_DEV = {
 		new webpack.ProgressPlugin(),
 		new CleanWebpackPlugin(),
 		new HardSourceWebpackPlugin(),
+		new EsmWebpackPlugin(),
 		new StatsPlugin('webpackStats.dev.json', {
 			all: false,
 			assets: true,
@@ -59,6 +61,7 @@ const GAME_PROD = Object.assign({}, GAME_DEV, {
 	},
 	plugins: [
 		new HardSourceWebpackPlugin(),
+		new EsmWebpackPlugin(),
 		new StatsPlugin('webpackStats.prod.json', {
 			chunks: true,
 			modules: false,
